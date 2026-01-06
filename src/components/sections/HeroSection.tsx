@@ -82,7 +82,7 @@ export function HeroSection() {
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+      <div className="absolute bottom-8 left-0 right-0 flex justify-center animate-float">
         <button
           onClick={() => scrollToSection("programs")}
           className="flex flex-col items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"

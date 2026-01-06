@@ -218,6 +218,7 @@ export default function NewsAdmin() {
                       <SelectItem value="news">News</SelectItem>
                       <SelectItem value="event">Event</SelectItem>
                       <SelectItem value="announcement">Announcement</SelectItem>
+                      <SelectItem value="achievement">Achievements</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

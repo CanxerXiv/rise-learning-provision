@@ -3,25 +3,25 @@ import { Button } from "@/components/ui/button";
 
 const founders = [
     {
-        name: "Dr. Thida Swe",
+        name: "Yamin Khin Khin",
         role: "Founder & Head of School",
         image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&h=400&fit=crop&q=80",
-        bio: "With over 20 years of experience in education, Dr. Swe established Rise to bring world-class educational standards to Myanmar."
+        bio: "With over 20 years of experience in education, Yamin established Rise to bring world-class educational standards to Myanmar."
     },
     {
-        name: "James Wilson",
+        name: "Pearl Khin Khin",
         role: "Director of Curriculum",
         image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&q=80",
         bio: "Former principal of international schools in Singapore and UK, specializing in dual-curriculum integration."
     },
     {
-        name: "Sarah Chen",
+        name: "Pyae Sone",
         role: "Director of Operations",
         image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=400&fit=crop&q=80",
         bio: "Ensuring smooth daily operations and strategic growth for the Rise Learning Provision network."
     },
     {
-        name: "Michael Kyaw",
+        name: "Sai Nay Min Htwe",
         role: "Director of Student Affairs",
         image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&q=80",
         bio: "Dedicated to student well-being and fostering a positive, inclusive school community for all learners."

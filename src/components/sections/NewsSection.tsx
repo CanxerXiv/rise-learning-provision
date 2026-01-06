@@ -198,7 +198,7 @@ export function NewsSection() {
                   className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-large transition-all duration-300 border border-border/50"
                 >
                   <div className="grid md:grid-cols-2 relative">
-                    <div className="relative min-h-[250px] md:min-h-0 md:h-full order-1 md:order-none">
+                    <div className="relative min-h-[280px] md:min-h-0 md:h-full order-1 md:order-none">
                       <img
                         src={item.image_url || "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80"}
                         alt={item.title}
@@ -287,39 +287,39 @@ export function NewsSection() {
       </div>
 
       <Dialog open={!!selectedNews} onOpenChange={() => setSelectedNews(null)}>
-        <DialogContent className="max-w-3xl max-h-[90vh] p-0 overflow-hidden">
+        <DialogContent className="max-w-3xl max-h-[90vh] p-0 overflow-y-auto">
           {selectedNews && (
-            <>
-              <div className="relative h-64 sm:h-80 w-full">
+            <div className="flex flex-col">
+              <div className="relative w-full">
                 <img
                   src={selectedNews.image_url || "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80"}
                   alt={selectedNews.title}
-                  className="w-full h-full object-cover"
+                  className="w-full h-auto object-contain max-h-[60vh] bg-black/5"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-6 sm:p-8">
-                  <Badge className="self-start mb-4 bg-secondary text-secondary-foreground">
+              </div>
+              <div className="p-6 sm:p-8 space-y-6">
+                <div>
+                  <Badge className="mb-4 bg-secondary text-secondary-foreground">
                     {selectedNews.category}
                   </Badge>
-                  <DialogTitle className="text-2xl sm:text-3xl font-serif font-bold text-white mb-2">
+                  <DialogTitle className="text-2xl sm:text-3xl font-serif font-bold text-foreground mb-4">
                     {selectedNews.title}
                   </DialogTitle>
-                  <div className="flex items-center gap-4 text-white/80 text-sm">
+                  <div className="flex items-center gap-4 text-muted-foreground text-sm">
                     <span className="flex items-center gap-1">
                       <Calendar className="h-4 w-4" />
                       {selectedNews.published_at ? format(new Date(selectedNews.published_at), "MMMM d, yyyy") : "Recent"}
                     </span>
                   </div>
                 </div>
-              </div>
-
-              <ScrollArea className="h-full max-h-[calc(90vh-20rem)]">
-                <div className="p-6 sm:p-8 space-y-4">
-                  <div className="prose prose-blue max-w-none text-muted-foreground whitespace-pre-wrap">
-                    {selectedNews.content || selectedNews.excerpt}
-                  </div>
+                <DialogDescription className="sr-only">
+                  Details for {selectedNews.title}
+                </DialogDescription>
+                <div className="prose prose-blue max-w-none text-muted-foreground whitespace-pre-wrap leading-relaxed">
+                  {selectedNews.content || selectedNews.excerpt}
                 </div>
-              </ScrollArea>
-            </>
+              </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>

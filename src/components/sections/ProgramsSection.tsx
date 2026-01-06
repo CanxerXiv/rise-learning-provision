@@ -108,15 +108,7 @@ export function ProgramsSection() {
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <Button
-            size="lg"
-            className="bg-primary text-primary-foreground hover:bg-primary-light"
-          >
-            View All Programs
-          </Button>
-        </div>
+
       </div>
     </section>
   );
