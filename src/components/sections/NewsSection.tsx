@@ -197,14 +197,14 @@ export function NewsSection() {
                   key={item.id}
                   className="group bg-card rounded-2xl overflow-hidden shadow-soft hover:shadow-large transition-all duration-300 border border-border/50"
                 >
-                  <div className="grid md:grid-cols-2">
-                    <div className="relative overflow-hidden h-64 md:h-full">
+                  <div className="grid md:grid-cols-2 relative">
+                    <div className="relative min-h-[250px] md:min-h-0 md:h-full order-1 md:order-none">
                       <img
                         src={item.image_url || "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&q=80"}
                         alt={item.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                      <Badge className="absolute top-4 left-4 bg-secondary text-secondary-foreground capitalize">
+                      <Badge className="absolute top-4 left-4 bg-secondary text-secondary-foreground capitalize z-10">
                         {item.category}
                       </Badge>
                     </div>

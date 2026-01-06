@@ -79,16 +79,17 @@ export function HeroSection() {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-          <button
-            onClick={() => scrollToSection("programs")}
-            className="flex flex-col items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-          >
-            <span className="text-sm font-medium">Scroll to explore</span>
-            <ChevronDown className="h-6 w-6" />
-          </button>
-        </div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+        <button
+          onClick={() => scrollToSection("programs")}
+          className="flex flex-col items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+        >
+          <span className="text-sm font-medium">Scroll to explore</span>
+          <ChevronDown className="h-6 w-6" />
+        </button>
       </div>
     </section>
   );
