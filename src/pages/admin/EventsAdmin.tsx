@@ -61,7 +61,7 @@ export default function EventsAdmin() {
         title: '',
         excerpt: '',
         content: '',
-        category: 'event', // Hardcoded to event
+        category: 'upcoming', // Changed to upcoming
         image_url: '',
         is_published: false,
         event_date: '',
@@ -73,8 +73,8 @@ export default function EventsAdmin() {
         const { data, error } = await supabase
             .from('news_events')
             .select('id, title, excerpt, content, category, image_url, is_published, published_at, created_at, updated_at, event_date, event_time, event_location')
-            .eq('category', 'event') // Only fetch events
-            .order('event_date', { ascending: true, nullsFirst: false }); // Order by event date
+            .eq('category', 'upcoming') // Fetch upcoming items
+            .order('event_date', { ascending: true, nullsFirst: false });
 
         if (error) {
             toast({ title: 'Error', description: error.message, variant: 'destructive' });
@@ -93,7 +93,7 @@ export default function EventsAdmin() {
             title: '',
             excerpt: '',
             content: '',
-            category: 'event',
+            category: 'upcoming',
             image_url: '',
             is_published: false,
             event_date: '',
@@ -111,7 +111,7 @@ export default function EventsAdmin() {
             title: item.title,
             excerpt: item.excerpt || '',
             content: item.content || '',
-            category: 'event',
+            category: 'upcoming',
             image_url: item.image_url || '',
             is_published: item.is_published || false,
             event_date: item.event_date || '',
@@ -127,15 +127,15 @@ export default function EventsAdmin() {
 
         const payload = {
             title: formData.title,
-            excerpt: formData.excerpt || null,
-            content: formData.content || null,
-            category: 'event',
-            image_url: formData.image_url || null,
+            excerpt: null, // Force null
+            content: null, // Force null
+            category: 'upcoming',
+            image_url: null, // Force null
             is_published: formData.is_published,
             published_at: formData.is_published ? new Date().toISOString() : null,
             event_date: formData.event_date || null,
             event_time: includeTime ? (formData.event_time || null) : null,
-            event_location: formData.event_location || null,
+            event_location: null, // Force null as requested
         };
 
         let error;
@@ -304,45 +304,7 @@ export default function EventsAdmin() {
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="event_location">Event Location</Label>
-                                    <Input
-                                        id="event_location"
-                                        value={formData.event_location}
-                                        onChange={(e) => setFormData({ ...formData, event_location: e.target.value })}
-                                        placeholder="e.g. Main Auditorium"
-                                        required
-                                    />
-                                </div>
 
-                                <div className="space-y-2">
-                                    <Label htmlFor="excerpt">Short Description</Label>
-                                    <Textarea
-                                        id="excerpt"
-                                        value={formData.excerpt}
-                                        onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
-                                        rows={2}
-                                        placeholder="Brief summary for the timeline view..."
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <Label htmlFor="content">Full Details</Label>
-                                    <Textarea
-                                        id="content"
-                                        value={formData.content}
-                                        onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                                        rows={6}
-                                        placeholder="Detailed information about the event..."
-                                    />
-                                </div>
-
-                                <ImageUpload
-                                    bucket="news-images"
-                                    value={formData.image_url}
-                                    onChange={(url) => setFormData({ ...formData, image_url: url })}
-                                    label="Cover Image (Optional)"
-                                    aspectRatio="wide"
-                                />
                                 <div className="flex items-center gap-2">
                                     <Switch
                                         id="is_published"

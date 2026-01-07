@@ -73,7 +73,6 @@ export default function NewsAdmin() {
     const { data, error } = await supabase
       .from('news_events')
       .select('id, title, excerpt, content, category, image_url, is_published, published_at, created_at, updated_at, event_date, event_time, event_location')
-      .neq('category', 'event')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -194,6 +193,7 @@ export default function NewsAdmin() {
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
                 <SelectItem value="news">News</SelectItem>
+                <SelectItem value="event">Event</SelectItem>
                 <SelectItem value="announcement">Announcement</SelectItem>
                 <SelectItem value="achievement">Achievements</SelectItem>
               </SelectContent>
@@ -234,6 +234,7 @@ export default function NewsAdmin() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="news">News</SelectItem>
+                        <SelectItem value="event">Event</SelectItem>
                         <SelectItem value="announcement">Announcement</SelectItem>
                         <SelectItem value="achievement">Achievements</SelectItem>
                       </SelectContent>
