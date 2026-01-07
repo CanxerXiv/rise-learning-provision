@@ -54,6 +54,7 @@ export default function EventsAdmin() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<NewsEvent | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [includeTime, setIncludeTime] = useState(false);
     const { toast } = useToast();
 
     const [formData, setFormData] = useState({
@@ -99,11 +100,13 @@ export default function EventsAdmin() {
             event_time: '',
             event_location: '',
         });
+        setIncludeTime(false);
         setEditingItem(null);
     };
 
     const openEditDialog = (item: NewsEvent) => {
         setEditingItem(item);
+        setIncludeTime(!!item.event_time);
         setFormData({
             title: item.title,
             excerpt: item.excerpt || '',
@@ -131,7 +134,7 @@ export default function EventsAdmin() {
             is_published: formData.is_published,
             published_at: formData.is_published ? new Date().toISOString() : null,
             event_date: formData.event_date || null,
-            event_time: formData.event_time || null,
+            event_time: includeTime ? (formData.event_time || null) : null,
             event_location: formData.event_location || null,
         };
 
@@ -221,65 +224,83 @@ export default function EventsAdmin() {
                                             required
                                         />
                                     </div>
-                                    <div className="space-y-2">
-                                        <Label htmlFor="event_time">Event Time</Label>
-                                        <div className="flex gap-2">
-                                            <Select
-                                                value={formData.event_time ? formData.event_time.split(':')[0].replace(/^0/, '') : '12'}
-                                                onValueChange={(hour) => {
-                                                    const currentTime = formData.event_time || '12:00 PM';
-                                                    const [, minute = '00', period = 'PM'] = currentTime.match(/(\d+):(\d+)\s*(AM|PM)/i) || [];
-                                                    setFormData({ ...formData, event_time: `${hour}:${minute} ${period}` });
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-2">
+                                            <Switch
+                                                id="include_time"
+                                                checked={includeTime}
+                                                onCheckedChange={(checked) => {
+                                                    setIncludeTime(checked);
+                                                    if (checked && !formData.event_time) {
+                                                        setFormData({ ...formData, event_time: '12:00 PM' });
+                                                    }
                                                 }}
-                                            >
-                                                <SelectTrigger className="w-20">
-                                                    <SelectValue placeholder="Hour" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
-                                                        <SelectItem key={hour} value={hour.toString()}>
-                                                            {hour}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                            <span className="flex items-center">:</span>
-                                            <Select
-                                                value={formData.event_time ? formData.event_time.match(/:(\d+)/)?.[1] || '00' : '00'}
-                                                onValueChange={(minute) => {
-                                                    const currentTime = formData.event_time || '12:00 PM';
-                                                    const [, hour = '12', , period = 'PM'] = currentTime.match(/(\d+):(\d+)\s*(AM|PM)/i) || [];
-                                                    setFormData({ ...formData, event_time: `${hour}:${minute} ${period}` });
-                                                }}
-                                            >
-                                                <SelectTrigger className="w-20">
-                                                    <SelectValue placeholder="Min" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
-                                                        <SelectItem key={minute} value={minute.toString().padStart(2, '0')}>
-                                                            {minute.toString().padStart(2, '0')}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
-                                            <Select
-                                                value={formData.event_time ? (formData.event_time.match(/\s*(AM|PM)/i)?.[1] || 'PM').toUpperCase() : 'PM'}
-                                                onValueChange={(period) => {
-                                                    const currentTime = formData.event_time || '12:00 PM';
-                                                    const [, hour = '12', minute = '00'] = currentTime.match(/(\d+):(\d+)/i) || [];
-                                                    setFormData({ ...formData, event_time: `${hour}:${minute} ${period}` });
-                                                }}
-                                            >
-                                                <SelectTrigger className="w-20">
-                                                    <SelectValue placeholder="AM/PM" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="AM">AM</SelectItem>
-                                                    <SelectItem value="PM">PM</SelectItem>
-                                                </SelectContent>
-                                            </Select>
+                                            />
+                                            <Label htmlFor="include_time">Specific Time?</Label>
                                         </div>
+
+                                        {includeTime && (
+                                            <div className="space-y-2">
+                                                <Label htmlFor="event_time">Event Time</Label>
+                                                <div className="flex gap-2">
+                                                    <Select
+                                                        value={formData.event_time ? formData.event_time.split(':')[0].replace(/^0/, '') : '12'}
+                                                        onValueChange={(hour) => {
+                                                            const currentTime = formData.event_time || '12:00 PM';
+                                                            const [, minute = '00', period = 'PM'] = currentTime.match(/(\d+):(\d+)\s*(AM|PM)/i) || [];
+                                                            setFormData({ ...formData, event_time: `${hour}:${minute} ${period}` });
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className="w-20">
+                                                            <SelectValue placeholder="Hour" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {Array.from({ length: 12 }, (_, i) => i + 1).map((hour) => (
+                                                                <SelectItem key={hour} value={hour.toString()}>
+                                                                    {hour}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <span className="flex items-center">:</span>
+                                                    <Select
+                                                        value={formData.event_time ? formData.event_time.match(/:(\d+)/)?.[1] || '00' : '00'}
+                                                        onValueChange={(minute) => {
+                                                            const currentTime = formData.event_time || '12:00 PM';
+                                                            const [, hour = '12', , period = 'PM'] = currentTime.match(/(\d+):(\d+)\s*(AM|PM)/i) || [];
+                                                            setFormData({ ...formData, event_time: `${hour}:${minute} ${period}` });
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className="w-20">
+                                                            <SelectValue placeholder="Min" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {Array.from({ length: 60 }, (_, i) => i).map((minute) => (
+                                                                <SelectItem key={minute} value={minute.toString().padStart(2, '0')}>
+                                                                    {minute.toString().padStart(2, '0')}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <Select
+                                                        value={formData.event_time ? (formData.event_time.match(/\s*(AM|PM)/i)?.[1] || 'PM').toUpperCase() : 'PM'}
+                                                        onValueChange={(period) => {
+                                                            const currentTime = formData.event_time || '12:00 PM';
+                                                            const [, hour = '12', minute = '00'] = currentTime.match(/(\d+):(\d+)/i) || [];
+                                                            setFormData({ ...formData, event_time: `${hour}:${minute} ${period}` });
+                                                        }}
+                                                    >
+                                                        <SelectTrigger className="w-20">
+                                                            <SelectValue placeholder="AM/PM" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="AM">AM</SelectItem>
+                                                            <SelectItem value="PM">PM</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
 

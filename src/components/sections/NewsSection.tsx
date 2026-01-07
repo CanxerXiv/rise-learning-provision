@@ -104,6 +104,7 @@ export function NewsSection() {
       const { data: newsData, error: newsError } = await supabase
         .from("news_events")
         .select("id, title, excerpt, content, category, image_url, published_at, event_date, event_time, event_location")
+        .neq('category', 'event')
         .order("published_at", { ascending: false })
         .limit(3);
 
@@ -270,10 +271,12 @@ export function NewsSection() {
                       <h4 className="font-semibold text-foreground text-sm mb-1 truncate group-hover:text-primary transition-colors">
                         {event.title}
                       </h4>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1">
-                        <Clock className="h-3 w-3" />
-                        {formatTime(event.event_time)}
-                      </p>
+                      {event.event_time && (
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {formatTime(event.event_time)}
+                        </p>
+                      )}
                     </div>
                   </div>
                 ))}
