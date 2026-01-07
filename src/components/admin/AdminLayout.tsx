@@ -22,11 +22,13 @@ import {
   LogOut,
   GraduationCap,
   Loader2,
+  Calendar,
 } from 'lucide-react';
 
 const menuItems = [
   { title: 'Dashboard', url: '/admin', icon: LayoutDashboard },
-  { title: 'News & Events', url: '/admin/news', icon: Newspaper },
+  { title: 'News & Updates', url: '/admin/news', icon: Newspaper },
+  { title: 'Upcoming Events', url: '/admin/events', icon: Calendar },
   { title: 'Testimonials', url: '/admin/testimonials', icon: MessageSquareQuote },
   { title: 'Contact Submissions', url: '/admin/contacts', icon: Mail },
 ];

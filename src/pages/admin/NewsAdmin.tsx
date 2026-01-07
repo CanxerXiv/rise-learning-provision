@@ -73,6 +73,7 @@ export default function NewsAdmin() {
     const { data, error } = await supabase
       .from('news_events')
       .select('id, title, excerpt, content, category, image_url, is_published, published_at, created_at, updated_at, event_date, event_time, event_location')
+      .neq('category', 'event')
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -179,8 +180,8 @@ export default function NewsAdmin() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-display font-bold">News & Events</h2>
-            <p className="text-muted-foreground">Manage news articles and events.</p>
+            <h2 className="text-2xl font-display font-bold">News & Updates</h2>
+            <p className="text-muted-foreground">Manage news articles and announcements.</p>
           </div>
           <div className="flex items-center gap-4 w-full sm:w-auto">
             <Select
@@ -193,7 +194,6 @@ export default function NewsAdmin() {
               <SelectContent>
                 <SelectItem value="all">All Categories</SelectItem>
                 <SelectItem value="news">News</SelectItem>
-                <SelectItem value="event">Event</SelectItem>
                 <SelectItem value="announcement">Announcement</SelectItem>
                 <SelectItem value="achievement">Achievements</SelectItem>
               </SelectContent>
@@ -211,7 +211,7 @@ export default function NewsAdmin() {
               </DialogTrigger>
               <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
-                  <DialogTitle>{editingItem ? 'Edit' : 'Create'} News/Event</DialogTitle>
+                  <DialogTitle>{editingItem ? 'Edit' : 'Create'} News</DialogTitle>
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
@@ -234,7 +234,6 @@ export default function NewsAdmin() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="news">News</SelectItem>
-                        <SelectItem value="event">Event</SelectItem>
                         <SelectItem value="announcement">Announcement</SelectItem>
                         <SelectItem value="achievement">Achievements</SelectItem>
                       </SelectContent>
