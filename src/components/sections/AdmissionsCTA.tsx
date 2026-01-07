@@ -17,7 +17,7 @@ export function AdmissionsCTA() {
   };
 
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-br from-secondary via-secondary to-secondary-light relative overflow-hidden">
+    <section id="tour" className="py-20 lg:py-32 bg-gradient-to-br from-secondary via-secondary to-secondary-light relative overflow-hidden">
       {/* Decorative Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 left-0 w-full h-full" style={{

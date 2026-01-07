@@ -20,14 +20,6 @@ const facilities = [
     features: ["6 specialized labs", "Modern equipment", "Safety stations", "Research facilities"],
   },
   {
-    id: "sports",
-    icon: Dumbbell,
-    title: "Athletic Complex",
-    description: "A comprehensive sports facility including an indoor gym, Olympic pool, track and field, and courts for various sports.",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=80",
-    features: ["Indoor gymnasium", "Olympic pool", "Track & field", "Tennis courts"],
-  },
-  {
     id: "arts",
     icon: Music,
     title: "Performing Arts Center",
@@ -42,14 +34,6 @@ const facilities = [
     description: "Cutting-edge computer labs, robotics workshop, and maker space for digital learning and innovation.",
     image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=800&q=80",
     features: ["Computer labs", "Robotics workshop", "3D printers", "VR equipment"],
-  },
-  {
-    id: "dining",
-    icon: Utensils,
-    title: "Dining Commons",
-    description: "A welcoming cafeteria serving nutritious meals with diverse options to accommodate all dietary needs.",
-    image: "https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&q=80",
-    features: ["Fresh daily meals", "Dietary options", "Outdoor seating", "Snack bar"],
   },
 ];
 

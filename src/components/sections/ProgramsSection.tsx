@@ -1,5 +1,14 @@
-import { GraduationCap, Beaker, Palette, Calculator, Globe, Trophy, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { GraduationCap, Beaker, Palette, Calculator, Globe, Trophy, ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const programs = [
   {
@@ -31,6 +40,8 @@ const programs = [
 ];
 
 export function ProgramsSection() {
+  const [selectedProgram, setSelectedProgram] = useState<typeof programs[0] | null>(null);
+
   return (
     <section id="programs" className="py-20 lg:py-32 bg-background">
       <div className="container mx-auto px-4">
@@ -49,10 +60,10 @@ export function ProgramsSection() {
 
         {/* Programs Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {programs.map((program, index) => (
+          {programs.map((program) => (
             <div
               key={program.title}
-              className="group bg-card rounded-2xl p-8 shadow-soft hover:shadow-large border border-border/50 hover:border-secondary/30 transition-all duration-300 hover:-translate-y-1"
+              className="group bg-card rounded-2xl p-8 shadow-soft hover:shadow-large border border-border/50 hover:border-secondary/30 transition-all duration-300 hover:-translate-y-1 flex flex-col"
             >
               <div className="flex items-start justify-between mb-6">
                 <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-secondary transition-colors duration-300">
@@ -66,40 +77,14 @@ export function ProgramsSection() {
               <h3 className="font-serif text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                 {program.title}
               </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+              <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-grow">
                 {program.description}
               </p>
 
-              <ul className="space-y-2 mb-6">
-                {program.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm text-foreground">
-                    <div className="w-1.5 h-1.5 rounded-full bg-secondary" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              {program.subPrograms && (
-                <div className="mt-6 pt-6 border-t border-border/50 space-y-4">
-                  <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">Included Programs</h4>
-                  <div className="space-y-4">
-                    {program.subPrograms.map(sub => (
-                      <div key={sub.title}>
-                        <h5 className="font-semibold text-foreground text-sm mb-1">{sub.title}</h5>
-                        <div className="flex flex-wrap gap-2">
-                          {sub.features.map(f => (
-                            <span key={f} className="text-xs text-muted-foreground bg-muted px-2 py-0.5 rounded-md">{f}</span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
               <Button
                 variant="ghost"
-                className="w-full justify-between text-primary hover:text-secondary-foreground group/btn mt-4"
+                className="w-full justify-between text-primary hover:text-secondary-foreground group/btn mt-auto"
+                onClick={() => setSelectedProgram(program)}
               >
                 Learn More
                 <ArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
@@ -108,6 +93,64 @@ export function ProgramsSection() {
           ))}
         </div>
 
+        <Dialog open={!!selectedProgram} onOpenChange={(open) => !open && setSelectedProgram(null)}>
+          <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col p-0 overflow-hidden">
+            <DialogHeader className="p-6 pb-2">
+              <div className="flex items-center gap-4 mb-2">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                  {selectedProgram && <selectedProgram.icon className="h-5 w-5 text-primary" />}
+                </div>
+                <DialogTitle className="text-2xl font-serif font-bold">{selectedProgram?.title}</DialogTitle>
+              </div>
+              <DialogDescription className="text-base text-muted-foreground">
+                {selectedProgram?.grades}
+              </DialogDescription>
+            </DialogHeader>
+
+            <ScrollArea className="flex-1 overflow-y-auto p-6 pt-0">
+              <div className="space-y-6">
+                <p className="text-muted-foreground leading-relaxed text-base">
+                  {selectedProgram?.description}
+                </p>
+
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-foreground flex items-center gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-secondary" />
+                    Key Features
+                  </h4>
+                  <ul className="grid sm:grid-cols-2 gap-3">
+                    {selectedProgram?.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-2 text-sm text-foreground bg-muted/50 p-2 rounded-lg">
+                        <div className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {selectedProgram?.subPrograms && (
+                  <div className="space-y-4 pt-4 border-t border-border">
+                    <h4 className="font-semibold text-foreground">Specialized Programs</h4>
+                    <div className="grid gap-4">
+                      {selectedProgram.subPrograms.map((sub) => (
+                        <div key={sub.title} className="bg-muted/30 p-4 rounded-xl border border-border/50">
+                          <h5 className="font-semibold text-foreground mb-2">{sub.title}</h5>
+                          <div className="flex flex-wrap gap-2">
+                            {sub.features.map((f) => (
+                              <span key={f} className="text-xs text-muted-foreground bg-background px-2 py-1 rounded-md border border-border">
+                                {f}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+          </DialogContent>
+        </Dialog>
 
       </div>
     </section>

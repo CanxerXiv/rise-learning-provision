@@ -8,7 +8,17 @@ const stats = [
   { icon: BookOpen, value: "IGCSE", label: "Coming June 2025" },
 ];
 
+// Add import at top
+import { useNavigate } from "react-router-dom";
+
+// Inside component
 export function HeroSection() {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+  };
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -50,7 +60,7 @@ export function HeroSection() {
             <Button
               size="lg"
               className="bg-secondary text-secondary-foreground hover:bg-secondary-light font-semibold px-8 py-6 text-lg shadow-glow"
-              onClick={() => scrollToSection("contact")}
+              onClick={() => handleNavigation("/contact#contact")}
             >
               Start Your Journey
             </Button>
@@ -58,7 +68,7 @@ export function HeroSection() {
               size="lg"
               variant="outline"
               className="border-2 border-primary-foreground/30 text-primary-foreground bg-transparent hover:bg-primary-foreground/10 font-semibold px-8 py-6 text-lg"
-              onClick={() => scrollToSection("about")}
+              onClick={() => handleNavigation("/contact#tour")}
             >
               Explore Campus
             </Button>
@@ -66,7 +76,7 @@ export function HeroSection() {
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
-            {stats.map((stat, index) => (
+            {stats.map((stat) => (
               <div
                 key={stat.label}
                 className="bg-primary-foreground/5 backdrop-blur-sm rounded-xl p-4 border border-primary-foreground/10 hover:bg-primary-foreground/10 transition-all duration-300"
@@ -78,7 +88,6 @@ export function HeroSection() {
             ))}
           </div>
         </div>
-
       </div>
 
       {/* Scroll Indicator */}
