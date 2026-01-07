@@ -368,75 +368,76 @@ export default function NewsAdmin() {
               </DialogContent>
             </Dialog>
           </div>
-
-          <div className="bg-card rounded-lg border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Category</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {isLoading ? (
-                  <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8">
-                      <Loader2 className="h-6 w-6 animate-spin mx-auto" />
-                    </TableCell>
-                  </TableRow>
-                ) : items.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
-                      No items found. Create your first news or event.
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  items
-                    .filter((item) => selectedCategory === "all" || item.category === selectedCategory)
-                    .map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell className="font-medium max-w-[200px] truncate">
-                          {item.title}
-                        </TableCell>
-                        <TableCell className="capitalize">{item.category}</TableCell>
-                        <TableCell>
-                          <span
-                            className={`px-2 py-1 rounded-full text-xs ${item.is_published
-                              ? 'bg-green-100 text-green-700'
-                              : 'bg-yellow-100 text-yellow-700'
-                              }`}
-                          >
-                            {item.is_published ? 'Published' : 'Draft'}
-                          </span>
-                        </TableCell>
-                        <TableCell>{format(new Date(item.created_at), 'MMM d, yyyy')}</TableCell>
-                        <TableCell className="text-right">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => openEditDialog(item)}
-                          >
-                            <Pencil className="h-4 w-4" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="text-destructive"
-                            onClick={() => handleDelete(item.id)}
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    ))
-                )}
-              </TableBody>
-            </Table>
-          </div>
         </div>
+
+        <div className="bg-card rounded-lg border">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Title</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Date</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8">
+                    <Loader2 className="h-6 w-6 animate-spin mx-auto" />
+                  </TableCell>
+                </TableRow>
+              ) : items.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                    No items found. Create your first news or event.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                items
+                  .filter((item) => selectedCategory === "all" || item.category === selectedCategory)
+                  .map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium max-w-[200px] truncate">
+                        {item.title}
+                      </TableCell>
+                      <TableCell className="capitalize">{item.category}</TableCell>
+                      <TableCell>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs ${item.is_published
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-yellow-100 text-yellow-700'
+                            }`}
+                        >
+                          {item.is_published ? 'Published' : 'Draft'}
+                        </span>
+                      </TableCell>
+                      <TableCell>{format(new Date(item.created_at), 'MMM d, yyyy')}</TableCell>
+                      <TableCell className="text-right">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          onClick={() => openEditDialog(item)}
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="text-destructive"
+                          onClick={() => handleDelete(item.id)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      </div>
     </AdminLayout>
   );
 }
