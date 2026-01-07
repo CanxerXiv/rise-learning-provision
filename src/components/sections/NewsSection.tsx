@@ -104,7 +104,7 @@ export function NewsSection() {
       const { data: newsData, error: newsError } = await supabase
         .from("news_events")
         .select("id, title, excerpt, content, category, image_url, published_at, event_date, event_time, event_location")
-        .neq('category', 'event')
+        .neq('category', 'upcoming')
         .order("published_at", { ascending: false })
         .limit(3);
 
@@ -119,7 +119,7 @@ export function NewsSection() {
       const { data: eventsData, error: eventsError } = await supabase
         .from("news_events")
         .select("id, title, excerpt, content, category, image_url, published_at, event_date, event_time, event_location")
-        .eq('category', 'event') // Note: Check case sensitivity. Admin uses lowercase 'event' in select value.
+        .eq('category', 'upcoming') // Fetch upcoming items
         .order("event_date", { ascending: true, nullsFirst: false }) // Upcoming usually means future closest first. 
         // If we strictly want "Upcoming" we should filter by date > now. 
         // For simplicity/demo (since we don't know if they have future dates), let's just take the most recent/future ones. 
@@ -258,8 +258,7 @@ export function NewsSection() {
                 {upcomingEvents.map((event, index) => (
                   <div
                     key={index}
-                    className="flex gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors group cursor-pointer"
-                    onClick={() => setSelectedNews(event)}
+                    className="flex gap-4 p-4 rounded-xl bg-muted/50 hover:bg-muted transition-colors group"
                   >
                     <div className="text-center shrink-0">
                       <div className="w-14 h-14 rounded-lg bg-primary text-primary-foreground flex flex-col items-center justify-center group-hover:bg-secondary group-hover:text-secondary-foreground transition-colors">

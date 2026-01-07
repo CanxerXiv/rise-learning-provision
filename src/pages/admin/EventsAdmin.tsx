@@ -333,7 +333,7 @@ export default function EventsAdmin() {
                             <TableRow>
                                 <TableHead>Event</TableHead>
                                 <TableHead>Date & Time</TableHead>
-                                <TableHead>Location</TableHead>
+
                                 <TableHead>Status</TableHead>
                                 <TableHead className="text-right">Actions</TableHead>
                             </TableRow>
@@ -341,13 +341,13 @@ export default function EventsAdmin() {
                         <TableBody>
                             {isLoading ? (
                                 <TableRow>
-                                    <TableCell colSpan={5} className="text-center py-8">
+                                    <TableCell colSpan={4} className="text-center py-8">
                                         <Loader2 className="h-6 w-6 animate-spin mx-auto" />
                                     </TableCell>
                                 </TableRow>
                             ) : items.length === 0 ? (
                                 <TableRow>
-                                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
+                                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
                                         No events found. Add your first upcoming event.
                                     </TableCell>
                                 </TableRow>
@@ -367,9 +367,7 @@ export default function EventsAdmin() {
                                                 </span>
                                             </div>
                                         </TableCell>
-                                        <TableCell className="max-w-[150px] truncate" title={item.event_location || ''}>
-                                            {item.event_location || '-'}
-                                        </TableCell>
+
                                         <TableCell>
                                             <span
                                                 className={`px-2 py-1 rounded-full text-xs ${item.is_published
